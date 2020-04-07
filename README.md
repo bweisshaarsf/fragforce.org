@@ -1,42 +1,44 @@
-# fragforce.org
-## Deployment Instructions
-1. Install the following system packages if they are not already installed:
-  * python2.7
-  * nginx
-  * virtualenv
-2. run ```virtualenv env``` to create the virtual environment for the server
-3. activate the virtual environment with ```. env/bin/activate```
-4. run ```pip install -r requirements.txt``` to install the remaining dependencies into the virtual environment.
-  * This will fail on FreeBSD because the gmp.h file for pycrypto is not in the default path, run the following 2 commands to resolve and re-run step 4 above:
+# Fragforce
+## About
+This is a rewrite of Fragforce.org using Django. 
 
-    ```
-    export CPPFLAGS="-I/usr/local/include $CPPFLAGS"
-    export LDFLAGS="-L/usr/local/lib $LDFLAGS"
-    ```
-  * Serving SVG files on FreeBSD will also fail due to missing mime-support port in ```misc/mime-support```
-5. Create a config.py file from the provided config.py.sample. Edit the
-   information inside as needed.
-6. To verify that it works, simply run ```python run.py``` to start a local server running on port 8000 for verification/development
-7. Create a new nginx server config for your server with the following data: 
+## Who we are
+Fragforce is the global charity gaming team from Salesforce that is raising money to support kids facing scary stuff
+like social mistreatment and medical issues (i.e. cancer, cystic-fibrosise, accidents, etc). By rallying our
+friends, family, and co-workers, we are creating/facilitating a new philanthropic tradition to boost employee morale
+and support cross-team and community collaboration through a shared love of gaming.
 
-    ```
-    server {
-        listen       80;
-        server_name  dev.fragforce.org localhost;
+## Who we are supporting
+Extra Life is a charity organization that is raising money to support Children's Miracle Network (CMN) hospitals
+across the country. Extra Life helps games to pledge to play games for 24 hours, and to solicit donations from their
+families and friends for CMN in the process.
 
-        access_log  /var/log/nginx/fragforce-test.org.access.log;
-        error_log /var/log/nginx/fragforce-test.org.error.log;
+Child's Play is an international charity organization that seeks to improve the lives of children in hospitals and
+domestic violence shelters through the generosity and kindness of the video game industry and the power of play.
 
-        location / {
-            try_files $uri @fragforce;
-        }
-        location @fragforce {
-            include uwsgi_params;
-            uwsgi_pass unix:/tmp/fragforce.sock;
-        }
-    }
-    ```
-  * Modify the listen port and server_name to your environment
-8. Restart nginx
-9. Run uwsgi in the project directory via ```uwsgi -s /tmp/fragforce.sock --module fragforce --callable app -H <PATH TO VIRTUALENV ENV DIRECTORY>```
-10. ```chmod 777 /tmp/fragforce.sock```
+## How can I donate?
+Make a donation to Fragforce's Extra Life team by visiting the Extra Life page and searching for Fragforce, or just
+go to team.fragforce.org
+
+Make a donation to Fragforce's Child's Play donation drive by visiting our donation campaign page
+
+## How can I help?
+Sign up to participate in an event and raise money as you can to save kid's lives! Simply click the 'Join Team' link
+on the Extra Life team page for Fragforce at team.fragforce.org
+
+International team members can raise money for Child's Play, join our Tiltify Team, and sign up to help run or
+participate in an international Fragforce event
+
+## Packages
+
+### ffsfdc
+Fragforce org to Fragforce.org linkage
+
+### fforg
+Project files
+
+### ffsite
+Fragforce.org pages
+
+### ffdonations
+Various donation sync options
